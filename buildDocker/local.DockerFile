@@ -8,6 +8,6 @@ RUN npm install
 
 COPY ["." ,  "."]
 
-EXPOSE 6008
+EXPOSE 2049
 
 CMD ["npm" ,"run" ,"local"]

@@ -10,4 +10,4 @@ RUN pm2 install pm2-logrotate
 RUN pm2 set pm2-logrotate:rotateInterval '0 0 */1 * *'
 RUN pm2 set pm2-logrotate:dateFormat 'YYYY-MM-DD'
 
-EXPOSE 6008
+EXPOSE 2049
