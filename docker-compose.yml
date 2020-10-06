@@ -1,0 +1,61 @@
+version: "3"
+
+services: 
+    app:
+        image: gpsconsumer:1.0
+        # build: 
+        #     dockerfile: ./buildDocker/local.DockerFile
+        #     context: .
+        ports:
+            # -   6008:6008
+            -   2049:2049
+        hostname: robotGps
+        restart: always
+        volumes: 
+            # -   ./:/usr/local/nodeapps/
+            -   /usr/local/volumes/robotgps:/root/.pm2/logs
+        # depends_on: 
+        #     -   rabbitmq
+        #     -   mongodb
+        environment: 
+            - TZ=America/Lima
+        command: pm2-runtime server.config.js --env development
+        # command: pm2-runtime server.config.js --env production
+
+        # healthcheck:
+        #     test: ["CMD", "curl", "http://127.0.0.1:6008/"]
+        #     interval: 10s
+        #     timeout: 5s
+        #     retries: 3
+
+    # rabbitmq:
+    #     image: rabbitmq:3.8.1-management
+    #     hostname: rabbitgps
+    #     restart: always
+    #     ports: 
+    #         -   5672:5672
+    #         -   15672:15672
+    #         # -   5673:5672
+    #         # -   15673:15672
+    #     environment: 
+    #         -   RABBITMQ_DEFAULT_USER=admin
+    #         -   RABBITMQ_DEFAULT_PASS=admin
+    #         -   RABBITMQ_DEFAULT_VHOST=/
+    #         -   TZ=America/Lima
+    #     volumes: 
+    #         -   /usr/local/volumes/rabbitmq:/var/lib/rabbitmq/mnesia/
+    #     # command: rabbitmqadmin -u admin -p admin -V / declare queue name=gps_con
+
+    # mongodb:
+    #     image: mongo
+    #     hostname: mongodb
+    #     restart: always
+    #     environment: 
+    #         -   MONGO_INITDB_ROOT_USERNAME=admin
+    #         -   MONGO_INITDB_ROOT_PASSWORD=password
+    #         -   TZ=America/Lima
+    #     volumes: 
+    #         -   /usr/local/volumes/mongodb:/data/db
+    #     ports:
+    #         -   27017:27017
+    #         # -     27018:27017
